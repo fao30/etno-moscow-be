@@ -1,0 +1,25 @@
+{
+	"development": {
+		"username": "postgres",
+		"password": "postgres",
+		"database": "kima_dev",
+		"host": "localhost",
+		"dialect": "postgres",
+		"port": 5432
+		},
+	"test": {
+		"username": "root",
+		"password": null,
+		"database": "database_test",
+		"host": "127.0.0.1",
+		"dialect": "mysql"
+	},
+	"production": {
+		"username": "kima_prod",
+		"password": "Y8veVxuiSpGCmM",
+		"database": "kima_prod",
+		"host": "127.0.0.1",
+		"port": 7765,
+		"dialect": "postgres"
+	}
+}
