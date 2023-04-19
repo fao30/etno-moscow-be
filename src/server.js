@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const TelegramBot = require("node-telegram-bot-api");
+const { Questions, Users, Surveys } = require("./api/models");
 
 const PORT = process.env.PORT || 3000;
 
@@ -33,46 +34,311 @@ require("./api/middlewares/passportJWT");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-console.log(
-  process.env.TELEGRAM_BOT_TOKEN,
-  "<<<====process.env.TELEGRAM_BOT_TOKEN"
-);
-// const bot = new TelegramBot("6046754958:AAHWTKQ_Tu0PWYQgiCXwnRasmSjZKjgWBeM", {
-//   polling: true,
-// });
-// const bot = new Telegraf("6046754958:AAHWTKQ_Tu0PWYQgiCXwnRasmSjZKjgWBeM");
-const bot = new TelegramBot("6046754958:AAHWTKQ_Tu0PWYQgiCXwnRasmSjZKjgWBeM", {
+
+const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, {
   polling: true,
 });
-
-// Define the question and answer options
-const question = "What is the capital of France?";
-const answerOptions = ["Paris", "Berlin", "Madrid", "London"];
-
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-
-  // Send the question and answer options
-  bot.sendMessage(chatId, question, {
-    reply_markup: {
-      keyboard: [answerOptions],
-      one_time_keyboard: true,
-      resize_keyboard: true,
+async function sendMessageListSurveys(chatId) {
+  const surveys = await Surveys.findAll({
+    where: {
+      isPrivate: false, //FIND ONLY THE PUBLIC-DONE
+      // isPrivate: false, //AND FIND THE ONE OPEN || NOT OPEN BUT REGION SAME
+    },
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
     },
   });
+  //KALAU NEMU LANGSUNG TAWARIN MAU APROS YANG MANA
+  const inlineKeyboard = surveys.map((e) => [
+    { text: e.title, callback_data: e.id },
+  ]);
+  inlineKeyboard.unshift([
+    { text: "ввести номер ID опроса", callback_data: "INPUT" },
+  ]);
+
+  // Define your options for the inline keyboard
+  const options = {
+    reply_markup: {
+      inline_keyboard: inlineKeyboard,
+    },
+  };
+
+  // Send a message with the inline keyboard to the specified chat
+  bot.sendMessage(chatId, "Please select an option:", options);
+}
+
+async function getQuestions(uuid) {
+  const surveys = await Surveys.findOne({
+    where: {
+      id: uuid,
+    },
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
+    },
+    include: [
+      {
+        model: Questions,
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+
+  const surveysQuest = surveys.Questions.map((e) => {
+    return {
+      id: e.id,
+      questionType: e.questionType,
+      question: e.questions,
+      correctAnswer: e.correctAnswer,
+      options: e.answersArray,
+      score: e.score,
+      hasAnswered: false,
+    };
+  });
+
+  return surveysQuest;
+}
+
+/**
+ * BORDER FOR FUNCTION==========================
+ */
+
+const userList = {};
+
+const userRegister = {};
+
+bot.onText(/\/start/, async (msg) => {
+  const chatId = msg.chat.id;
+  const users = await Users.findOne({
+    where: {
+      telegramId: chatId,
+    },
+    attributes: {
+      exclude: ["createdAt", "updatedAt", "regionId"],
+    },
+  });
+  let message = "Siap";
+  if (users) {
+    //IF USER EXIST THEN SHOW LIST OF SURVEY
+    sendMessageListSurveys(chatId);
+    return;
+  } else {
+    userRegister[chatId] = {
+      isRegistering: true,
+      fields: {
+        firstName: "",
+        lastName: "",
+        secondName: "",
+        university: "",
+        email: "",
+        phone: "",
+        phone: "",
+        regionId: "",
+        // telegramId: chatId,
+        // isAdmin: false,
+        // regionId: false,
+      },
+    };
+    //KALAU GA NEMU SURUH DAFTAR
+    const objectFields = userRegister[chatId].fields;
+    for (const property in objectFields) {
+      if (!objectFields[property]) {
+        bot.sendMessage(chatId, `Введите ${property}:`);
+      }
+    }
+    return;
+  }
+
+  // Send the question and answer options
 });
 
-bot.on("message", (msg) => {
+bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
+  const text = msg.text;
 
-  // Check if the user's response is correct
-  if (msg.text === "Paris") {
-    bot.sendMessage(chatId, "Correct answer!");
-  } else {
-    bot.sendMessage(chatId, "Sorry, that is incorrect.");
+  //IF STILL REGISTERING HERE
+  if (userRegister[chatId]?.isRegistering) {
+    const objectFields = userRegister[chatId].fields;
+    for (const property in objectFields) {
+      if (!objectFields[property]) {
+        bot.sendMessage(chatId, `Введите ${property}`);
+        return;
+      }
+    }
+  }
+
+  //IF THE ANSER да or нет and isAnswering=false
+  if (!userList[chatId]?.isAnswering && (text === "да" || text === "нет")) {
+    if (text === "да") {
+      //SEND CERTIFICATE
+      console.log("GIVING CERTIFICATE");
+      bot.sendPhoto(
+        chatId,
+        "https://i.ytimg.com/vi/pw3U1SLwLVk/maxresdefault.jpg",
+        { caption: "EHEHEHEHEHEHEHHE!" }
+      );
+    } else {
+      sendMessageListSurveys(chatId);
+    }
+    delete userList[chatId];
+    return;
+  }
+
+  const user = await Users.findOne({
+    where: {
+      telegramId: chatId,
+    },
+    attributes: {
+      exclude: ["createdAt", "updatedAt", "regionId"],
+    },
+  });
+
+  /**
+   * IF USER  IS_PRIVATE TRUE, THEN NEED TO FIND SURVEY BY ID
+   */
+
+  //IF USER IS SEARCHING SURVEYS BY ID AND HAS NOT ANSERING YET
+  if (userList[chatId]?.isPrivate && !userList[chatId]?.isAnswering) {
+    userList[chatId] = {
+      isPrivate: true,
+      isAnswering: true,
+      score: 0,
+      questions: await getQuestions(text), //text is uuid
+    };
+
+    const questionSend = userList[chatId].questions[0].question;
+    const answerSend = userList[chatId].questions[0].options;
+
+    bot.sendMessage(chatId, questionSend, {
+      reply_markup: {
+        keyboard: [answerSend],
+        one_time_keyboard: true,
+        resize_keyboard: true,
+      },
+    });
+    return;
+  }
+
+  if (user && userList[chatId]?.isAnswering) {
+    //FIND ON WHICH QUESTIONS ARE WE IN
+    let indexAnswer = NaN;
+    userList[chatId].questions.some((element, index) => {
+      if (!element.hasAnswered) {
+        indexAnswer = index;
+        return true;
+      }
+    });
+    if (indexAnswer === NaN) {
+      //FINISH THE SURVEY
+      sendMessageListSurveys(chatId);
+      return;
+    }
+
+    //CHECK IF THE ANSWER IS CORRECT
+    //ADD UP THE SCORE
+    if (text === userList[chatId].questions[indexAnswer].correctAnswer) {
+      //ADD THE SCORE
+      userList[chatId].score += userList[chatId].questions[indexAnswer].score;
+    }
+    //CHANGE THE QUESTION INTO TRUE
+    userList[chatId].questions[indexAnswer].hasAnswered = true;
+    if (userList[chatId].questions[indexAnswer + 1]) {
+      const questionSend = userList[chatId].questions[indexAnswer + 1].question;
+      const answerSend = userList[chatId].questions[indexAnswer + 1].options;
+
+      bot.sendMessage(chatId, questionSend, {
+        reply_markup: {
+          keyboard: [answerSend],
+          one_time_keyboard: true,
+          resize_keyboard: true,
+        },
+      });
+    } else {
+      //OPROSS FINISH BRADER
+      //DELETING FORM LIST
+      // delete userList[chatId];
+      userList[chatId].isAnswering = false;
+      bot.sendMessage(
+        chatId,
+        `ваши баллы:${userList[chatId].score} распечатать сертификат?`,
+        {
+          reply_markup: {
+            keyboard: [["да"], ["нет"]],
+            one_time_keyboard: true,
+            resize_keyboard: true,
+          },
+        }
+      );
+    }
   }
 });
 
+bot.on("callback_query", async (query) => {
+  const data = query.data;
+  const chatId = query.message.chat.id;
+
+  // Send a message depending on which button was pressed
+  switch (data) {
+    case "INPUT":
+      userList[chatId] = {
+        isPrivate: true,
+        isAnswering: false,
+      }; //kalau masukin yang private
+      bot.sendMessage(chatId, "Введите номер ID опроса:");
+      break;
+    default: //kalau masukin yang private
+      // break;
+      // const surveys = await Surveys.findOne({
+      //   where: {
+      //     id: data,
+      //   },
+      //   attributes: {
+      //     exclude: ["createdAt", "updatedAt"],
+      //   },
+      //   include: [
+      //     {
+      //       model: Questions,
+      //       through: {
+      //         attributes: [],
+      //       },
+      //     },
+      //   ],
+      // });
+
+      // const surveysQuest = surveys.Questions.map((e) => {
+      //   return {
+      //     id: e.id,
+      //     questionType: e.questionType,
+      //     question: e.questions,
+      //     correctAnswer: e.correctAnswer,
+      //     options: e.answersArray,
+      //     score: e.score,
+      //     hasAnswered: false,
+      //   };
+      // });
+
+      userList[chatId] = {
+        isPrivate: false,
+        isAnswering: true,
+        score: 0,
+        questions: await getQuestions(data),
+      };
+
+      const questionSend = userList[chatId].questions[0].question;
+      const answerSend = userList[chatId].questions[0].options;
+
+      bot.sendMessage(chatId, questionSend, {
+        reply_markup: {
+          keyboard: [answerSend],
+          one_time_keyboard: true,
+          resize_keyboard: true,
+        },
+      });
+
+      break;
+  }
+});
 // // registerLogin Routes
 // app.use("/api/register", require("./api/routes/registerLogin/registerRoutes"));
 // app.use("/api", require("./api/routes/registerLogin/loginRoutes"));
