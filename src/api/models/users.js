@@ -111,7 +111,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       telegramId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: true,
       },
       isAdmin: {

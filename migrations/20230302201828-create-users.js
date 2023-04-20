@@ -38,7 +38,7 @@ module.exports = {
         allowNull: true,
       },
       telegramId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         allowNull: true,
       },
       isAdmin: {
