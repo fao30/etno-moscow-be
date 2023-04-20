@@ -2,7 +2,6 @@ require("dotenv").config();
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const UserService = require("../service/userService");
-const StudyService = require("../service/studyService");
 
 class PassportController {
   static async signupUser(req, email, password, done) {

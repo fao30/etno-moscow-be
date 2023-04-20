@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      PersonalQualities.belongsToMany(models.Users, {
-        through: models.User_PersonalQuality,
-        as: "personalQuality",
-        foreignKey: "personalQuality_id",
-        onDelete: "cascade",
-      });
+      // PersonalQualities.belongsToMany(models.Users, {
+      //   through: models.User_PersonalQuality,
+      //   as: "personalQuality",
+      //   foreignKey: "personalQuality_id",
+      //   onDelete: "cascade",
+      // });
     }
   }
   PersonalQualities.init(

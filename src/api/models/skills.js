@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Skills.belongsToMany(models.Users, {
-        through: models.Users_Skills,
-        as: "userSkills",
-        foreignKey: "skill_id",
-        onDelete: "cascade",
-      });
-      Skills.belongsToMany(models.Specializations, {
-        through: models.Specializations_Skills,
-        foreignKey: "skill_id",
-        as: "specSkills",
-        onDelete: "cascade",
-      });
-      Skills.belongsToMany(models.Studies, {
-        through: models.Studies_Skills,
-        foreignKey: "skill_id",
-        onDelete: "cascade",
-      });
+      // Skills.belongsToMany(models.Users, {
+      //   through: models.Users_Skills,
+      //   as: "userSkills",
+      //   foreignKey: "skill_id",
+      //   onDelete: "cascade",
+      // });
+      // Skills.belongsToMany(models.Specializations, {
+      //   through: models.Specializations_Skills,
+      //   foreignKey: "skill_id",
+      //   as: "specSkills",
+      //   onDelete: "cascade",
+      // });
+      // Skills.belongsToMany(models.Studies, {
+      //   through: models.Studies_Skills,
+      //   foreignKey: "skill_id",
+      //   onDelete: "cascade",
+      // });
     }
   }
   Skills.init(

@@ -43,7 +43,8 @@ module.exports = (sequelize, DataTypes) => {
       // Users.belongsTo(models.Universities, { foreignKey: "universityId" });
       // Users.belongsTo(models.Educations, { foreignKey: "educationId" });
       // Users.belongsTo(models.Studies, { foreignKey: "studyId" });
-      Users.hasMany(models.Regions, { foreignKey: "regionId" });
+      Users.belongsTo(models.Regions, { foreignKey: "regionId" });
+      // Users.hasMany(models.Regions, { foreignKey: "regionId" });
       // Users.belongsTo(models.Documents, { foreignKey: "photoId" });
       // Users.belongsTo(models.Specialties, {
       //   foreignKey: "specialtyId",
@@ -73,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
       //   foreignKey: "userId",
       //   onDelete: "cascade",
       // });
+      Users.belongsToMany(models.Surveys, {
+        through: models.Users_Surveys,
+        foreignKey: "userId",
+        onDelete: "cascade",
+      });
     }
   }
   Users.init(
@@ -137,14 +143,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: new Date(),
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
       },
     },
     {

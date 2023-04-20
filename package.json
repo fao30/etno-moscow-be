@@ -1,7 +1,7 @@
 {
-	"name": "kima-be",
+	"name": "etno-moscow",
 	"version": "1.0.0",
-	"description": "API for Kima ",
+	"description": "API for etno_moscow ",
 	"main": "src/server.js",
 	"scripts": {
 		"dev": "cross-env process.env.NODE_ENV='development' nodemon",
