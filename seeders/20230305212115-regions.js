@@ -48,6 +48,335 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        id: uuidv4(),
+        code: "07",
+        name: "Кабардино-Балкарская Республика",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "08",
+        name: "Республика Калмыкия",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "09",
+        name: "Карачаево-Черкесская Республика",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "10",
+        name: "Республика Карелия",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "11",
+        name: "Республика Коми",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "12",
+        name: "Республика Марий Эл",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "13",
+        name: "Республика Мордовия",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "14",
+        name: "Республика Саха (Якутия)",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "15",
+        name: "Республика Северная Осетия - Алания",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "16",
+        name: "Республика Татарстан (Татарстан)",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "17",
+        name: "Республика Тыва",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "18",
+        name: "Удмуртская Республика",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "19",
+        name: "Республика Хакасия",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "20",
+        name: "Чеченская Республика",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "21",
+        name: "Чувашская Республика - Чувашия",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "22",
+        name: "Алтайский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "23",
+        name: "Краснодарский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "24",
+        name: "Красноярский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "25",
+        name: "Приморский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "25",
+        name: "Приморский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "26",
+        name: "Ставропольский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "27",
+        name: "Хабаровский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "28",
+        name: "Амурская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "29",
+        name: "Архангельская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "30",
+        name: "Астраханская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "31",
+        name: "Белгородская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "32",
+        name: "Брянская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "33",
+        name: "Владимирская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "34",
+        name: "Волгоградская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "35",
+        name: "Вологодская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "36",
+        name: "Воронежская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "37",
+        name: "Ивановская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "38",
+        name: "Иркутская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "39",
+        name: "Калининградская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "40",
+        name: "Калужская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "41",
+        name: "Камчатский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "41",
+        name: "Камчатский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "42",
+        name: "Кемеровская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "43",
+        name: "Кировская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "44",
+        name: "Костромская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "45",
+        name: "Курганская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "46",
+        name: "Курская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "46",
+        name: "Курская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "47",
+        name: "Ленинградская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "48",
+        name: "Липецкая область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "49",
+        name: "Магаданская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "50",
+        name: "Московская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 
@@ -56,94 +385,6 @@ module.exports = {
   },
 };
 
-// 07
-// Кабардино-Балкарская Республика
-// 08
-// Республика Калмыкия
-// 09
-// Карачаево-Черкесская Республика
-// 10
-// Республика Карелия
-// 11
-// Республика Коми
-// 12
-// Республика Марий Эл
-// 13
-// Республика Мордовия
-// 14
-// Республика Саха (Якутия)
-// 15
-// Республика Северная Осетия - Алания
-// 16
-// Республика Татарстан (Татарстан)
-// 17
-// Республика Тыва
-// 18
-// Удмуртская Республика
-// 19
-// Республика Хакасия
-// 20
-// Чеченская Республика
-// 21
-// Чувашская Республика - Чувашия
-// 22
-// Алтайский край
-// 23
-// Краснодарский край
-// 24
-// Красноярский край
-// 25
-// Приморский край
-// 26
-// Ставропольский край
-// 27
-// Хабаровский край
-// 28
-// Амурская область
-// 29
-// Архангельская область
-// 30
-// Астраханская область
-// 31
-// Белгородская область
-// 32
-// Брянская область
-// 33
-// Владимирская область
-// 34
-// Волгоградская область
-// 35
-// Вологодская область
-// 36
-// Воронежская область
-// 37
-// Ивановская область
-// 38
-// Иркутская область
-// 39
-// Калининградская область
-// 40
-// Калужская область
-// 41
-// Камчатский край
-// 42
-// Кемеровская область
-// 43
-// Кировская область
-// 44
-// Костромская область
-// 45
-// Курганская область
-// 46
-// Курская область
-// 47
-// Ленинградская область
-// 48
-// Липецкая область
-// 49
-// Магаданская область
-// 50
-// Московская область
 // 51
 // Мурманская область
 // 52

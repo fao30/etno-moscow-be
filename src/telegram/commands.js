@@ -1,7 +1,7 @@
-const bot = require("../../server");
-const { Surveys } = require("../../api/models");
+const { Surveys, Questions } = require("../api/models");
 
 async function sendMessageListSurveys(chatId) {
+  const bot = require("../server");
   const surveys = await Surveys.findAll({
     where: {
       isPrivate: false, //FIND ONLY THE PUBLIC-DONE
