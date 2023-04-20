@@ -1,6 +1,7 @@
-const { Users, Questions, Surveys } = require("../models");
+const { Users, Questions, Surveys, Regions } = require("../models");
 const Sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
 
 class SurveyService {
   static async findAllSurveys() {
@@ -16,6 +17,12 @@ class SurveyService {
           },
           attributes: {
             exclude: ["password"],
+          },
+        },
+        {
+          model: Regions,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
           },
         },
         {
@@ -45,12 +52,43 @@ class SurveyService {
           },
         },
         {
+          model: Regions,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+        {
           model: Questions,
           through: {
             attributes: [],
           },
         },
       ],
+    });
+  }
+
+  static async register(
+    title,
+    descriptions,
+    maxScore,
+    isPrivate,
+    isOpen,
+    regionId
+  ) {
+    return Surveys.create({
+      title,
+      descriptions,
+      maxScore,
+      isPrivate,
+      isOpen,
+      regionId,
+    });
+  }
+  static async delete(id) {
+    return Surveys.destroy({
+      where: {
+        id,
+      },
     });
   }
 }

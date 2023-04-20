@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { v4: uuidv4 } = require("uuid");
 //USE
 module.exports = (sequelize, DataTypes) => {
   class Surveys extends Model {
@@ -15,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "surveyId",
         onDelete: "cascade",
       });
+      Surveys.belongsTo(models.Regions, { foreignKey: "regionId" });
       Surveys.belongsToMany(models.Questions, {
         through: models.Questions_Surveys,
         foreignKey: "surveyId",

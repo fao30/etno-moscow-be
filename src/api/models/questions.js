@@ -1,6 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 //USE
+const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class Questions extends Model {
     /**

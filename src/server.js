@@ -298,7 +298,6 @@ bot.on("callback_query", async (query) => {
 
   if (!userList[chatId] && userRegister[chatId]?.isRegistering) {
     bot.sendMessage(chatId, "/start");
-
     return;
   }
 
@@ -334,6 +333,14 @@ bot.on("callback_query", async (query) => {
       break;
   }
 });
+
+bot.on("error", (err) => {
+  console.log("Telegram bot error:", err.message);
+});
+
+/**
+ * ROUTE START FROM HERE
+ */
 
 //USER ROUTE
 app.use("/api/users", require("./api/routes/usersRoutes"));

@@ -32,6 +32,36 @@ class SurveysController {
     return res.json({ user });
   }
 
+  static async createSurvey(req, res) {
+    const { title, descriptions, maxScore, isPrivate, isOpen, regionId } =
+      req.body;
+    const user = await SruveyService.register(
+      title,
+      descriptions,
+      maxScore,
+      isPrivate,
+      isOpen,
+      regionId
+    );
+
+    if (!user) {
+      throw new AppError(BAD_REQUEST, "Cannot create survey", 400);
+    }
+
+    return res.status(CREATED).json({ user });
+  }
+
+  static async deleteSurvey(req, res) {
+    const { id } = req.params;
+
+    const deleted = await SruveyService.delete(id);
+
+    if (!deleted) {
+      throw new AppError(BAD_REQUEST, "Cannot delete survey", 400);
+    }
+
+    return res.json({ message: "survey deleted" });
+  }
   // static async getUserToken(req, res) {
   //   const bearer = req.headers["authorization"];
   //   const token = bearer?.split(" ")[1];
@@ -114,18 +144,6 @@ class SurveysController {
   //   await oldUser.save();
 
   //   return res.json({ message: "Updated" });
-  // }
-
-  // static async deleteUser(req, res) {
-  //   const { id } = req.params;
-
-  //   const deleted = await UserServices.deleteUser(id);
-
-  //   if (!deleted) {
-  //     throw new AppError(BAD_REQUEST, "Cannot delete user", 400);
-  //   }
-
-  //   return res.json({ message: "user deleted" });
   // }
 
   // static async changePassword(req, res) {

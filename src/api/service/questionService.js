@@ -1,4 +1,4 @@
-const { Users, Questions, Surveys } = require("../models");
+const { Questions_Surveys, Questions, Surveys } = require("../models");
 const Sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
 
@@ -17,6 +17,27 @@ class QuestionService {
       attributes: {
         exclude: ["updatedAt", "createdAt"],
       },
+    });
+  }
+  static async create(
+    questions,
+    questionType,
+    correctAnswer,
+    score,
+    answersArray
+  ) {
+    return Questions.create({
+      questions,
+      questionType,
+      correctAnswer,
+      score,
+      answersArray,
+    });
+  }
+  static async addQuestionSurvey(surveyId, questionId) {
+    return Questions_Surveys.create({
+      surveyId,
+      questionId,
     });
   }
 }
