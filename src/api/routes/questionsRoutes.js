@@ -9,7 +9,7 @@ router.get("/", tryCatch(QuestionsController.getAllQuestions));
 router.get("/:id", tryCatch(QuestionsController.getQuestionById));
 
 //create question by id questions
-router.post("/:id", tryCatch(QuestionsController.createQuestion));
+router.post("/:surveyId", tryCatch(QuestionsController.createQuestion));
 
 router.use(errorMiddleware);
 

@@ -5,6 +5,9 @@ const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const surveys = await queryInterface.sequelize.query(
+      'SELECT id FROM "Surveys";'
+    );
     await queryInterface.bulkInsert("Questions", [
       {
         id: uuidv4(),
@@ -12,6 +15,7 @@ module.exports = {
         questionType: "customResponse",
         correctAnswer: "Okta",
         answersArray: ["Okta", "Okti", "Okto"],
+        surveyId: surveys[0][0].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

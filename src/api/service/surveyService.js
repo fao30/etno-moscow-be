@@ -27,8 +27,8 @@ class SurveyService {
         },
         {
           model: Questions,
-          through: {
-            attributes: [],
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
           },
         },
       ],
@@ -59,8 +59,8 @@ class SurveyService {
         },
         {
           model: Questions,
-          through: {
-            attributes: [],
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
           },
         },
       ],

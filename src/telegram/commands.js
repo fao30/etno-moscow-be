@@ -41,9 +41,6 @@ async function getQuestions(uuid) {
     include: [
       {
         model: Questions,
-        through: {
-          attributes: [],
-        },
       },
     ],
   });

@@ -11,11 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Questions.belongsToMany(models.Surveys, {
-        through: models.Questions_Surveys,
-        foreignKey: "questionId",
-        onDelete: "cascade",
-      });
+      Questions.belongsTo(models.Surveys, { foreignKey: "surveyId" });
+
+      // Questions.belongsToMany(models.Surveys, {
+      //   through: models.Questions_Surveys,
+      //   foreignKey: "questionId",
+      //   onDelete: "cascade",
+      // });
     }
   }
   Questions.init(
@@ -31,6 +33,16 @@ module.exports = (sequelize, DataTypes) => {
       score: DataTypes.INTEGER,
       answersArray: {
         type: DataTypes.ARRAY(DataTypes.STRING),
+      },
+      surveyId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: "Surveys", // name of the parent table
+          key: "id", // name of the parent table's UUID field
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
     },
     {

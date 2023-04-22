@@ -8,6 +8,14 @@ class QuestionService {
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
+      include: [
+        {
+          model: Surveys,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
     });
   }
 
@@ -17,6 +25,14 @@ class QuestionService {
       attributes: {
         exclude: ["updatedAt", "createdAt"],
       },
+      include: [
+        {
+          model: Surveys,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
     });
   }
   static async create(
@@ -24,7 +40,8 @@ class QuestionService {
     questionType,
     correctAnswer,
     score,
-    answersArray
+    answersArray,
+    surveyId
   ) {
     return Questions.create({
       questions,
@@ -32,12 +49,7 @@ class QuestionService {
       correctAnswer,
       score,
       answersArray,
-    });
-  }
-  static async addQuestionSurvey(surveyId, questionId) {
-    return Questions_Surveys.create({
       surveyId,
-      questionId,
     });
   }
 }

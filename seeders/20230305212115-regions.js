@@ -377,6 +377,244 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        id: uuidv4(),
+        code: "51",
+        name: "Мурманская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "52",
+        name: "Нижегородская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "53",
+        name: "Новгородская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "54",
+        name: "Новосибирская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "55",
+        name: "Омская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "56",
+        name: "Оренбургская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "57",
+        name: "Орловская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "58",
+        name: "Пензенская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "59",
+        name: "Пермский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "60",
+        name: "Псковская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "61",
+        name: "Ростовская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "62",
+        name: "Рязанская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "63",
+        name: "Самарская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "64",
+        name: "Саратовская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "65",
+        name: "Сахалинская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "66",
+        name: "Свердловская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "67",
+        name: "Смоленская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "68",
+        name: "Тамбовская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "69",
+        name: "Тверская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "70",
+        name: "Томская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "71",
+        name: "Тульская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "72",
+        name: "Тюменская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "73",
+        name: "Ульяновская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "74",
+        name: "Челябинская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "75",
+        name: "Забайкальский край",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "76",
+        name: "Ярославская область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "77",
+        name: "г. Москва",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "78",
+        name: "Санкт-Петербург",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "79",
+        name: "Еврейская автономная область",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "83",
+        name: "Ненецкий автономный округ",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "86",
+        name: "Ханты-Мансийский автономный округ - Югра",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "87",
+        name: "Чукотский автономный округ",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "89",
+        name: "Ямало-Ненецкий автономный округ",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        code: "99",
+        name: "Иные территории, включая город и космодром Байконур",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 
@@ -384,72 +622,3 @@ module.exports = {
     await queryInterface.bulkDelete("Regions", null, {});
   },
 };
-
-// 51
-// Мурманская область
-// 52
-// Нижегородская область
-// 53
-// Новгородская область
-// 54
-// Новосибирская область
-// 55
-// Омская область
-// 56
-// Оренбургская область
-// 57
-// Орловская область
-// 58
-// Пензенская область
-// 59
-// Пермский край
-// 60
-// Псковская область
-// 61
-// Ростовская область
-// 62
-// Рязанская область
-// 63
-// Самарская область
-// 64
-// Саратовская область
-// 65
-// Сахалинская область
-// 66
-// Свердловская область
-// 67
-// Смоленская область
-// 68
-// Тамбовская область
-// 69
-// Тверская область
-// 70
-// Томская область
-// 71
-// Тульская область
-// 72
-// Тюменская область
-// 73
-// Ульяновская область
-// 74
-// Челябинская область
-// 75
-// Забайкальский край
-// 76
-// Ярославская область
-// 77
-// г. Москва
-// 78
-// Санкт-Петербург
-// 79
-// Еврейская автономная область
-// 83
-// Ненецкий автономный округ
-// 86
-// Ханты-Мансийский автономный округ - Югра
-// 87
-// Чукотский автономный округ
-// 89
-// Ямало-Ненецкий автономный округ
-// 99
-// Иные территории, включая город и космодром Байконур

@@ -32,7 +32,7 @@ class QuestionsController {
     return res.json({ user });
   }
   static async createQuestion(req, res) {
-    const { id } = req.params;
+    const { surveyId } = req.params;
     const { questions, questionType, correctAnswer, score, answersArray } =
       req.body;
 
@@ -41,21 +41,15 @@ class QuestionsController {
       questionType,
       correctAnswer,
       score,
-      answersArray
+      answersArray,
+      surveyId
     );
 
     if (!question) {
       throw new AppError(BAD_REQUEST, "Cannot create question", 400);
     }
-    const questionSurvey = await QuestionService.addQuestionSurvey(
-      id,
-      question.id
-    );
-    if (!questionSurvey) {
-      throw new AppError(BAD_REQUEST, "Cannot add question Survey", 400);
-    }
 
-    return res.status(CREATED).json({ questionSurvey });
+    return res.status(CREATED).json({ question });
   }
 
   // static async getUserToken(req, res) {

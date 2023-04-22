@@ -17,11 +17,12 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
       });
       Surveys.belongsTo(models.Regions, { foreignKey: "regionId" });
-      Surveys.belongsToMany(models.Questions, {
-        through: models.Questions_Surveys,
-        foreignKey: "surveyId",
-        onDelete: "cascade",
-      });
+      Surveys.hasMany(models.Questions, { foreignKey: "surveyId" });
+      // Surveys.belongsToMany(models.Questions, {
+      //   through: models.Questions_Surveys,
+      //   foreignKey: "surveyId",
+      //   onDelete: "cascade",
+      // });
     }
   }
   Surveys.init(
