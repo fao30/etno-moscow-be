@@ -41,7 +41,8 @@ class QuestionService {
     correctAnswer,
     score,
     answersArray,
-    surveyId
+    surveyId,
+    mediaUrl
   ) {
     return Questions.create({
       questions,
@@ -50,6 +51,7 @@ class QuestionService {
       score,
       answersArray,
       surveyId,
+      mediaUrl,
     });
   }
 }

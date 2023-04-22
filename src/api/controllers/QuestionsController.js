@@ -32,6 +32,13 @@ class QuestionsController {
     return res.json({ user });
   }
   static async createQuestion(req, res) {
+    let mediaUrl;
+    if (req.file) {
+      let media = req.file.path;
+      const urlArr = media.split("/");
+      mediaUrl = urlArr.slice(1, urlArr.length).join("/");
+    }
+
     const { surveyId } = req.params;
     const { questions, questionType, correctAnswer, score, answersArray } =
       req.body;
@@ -42,7 +49,8 @@ class QuestionsController {
       correctAnswer,
       score,
       answersArray,
-      surveyId
+      surveyId,
+      mediaUrl
     );
 
     if (!question) {
@@ -51,6 +59,25 @@ class QuestionsController {
 
     return res.status(CREATED).json({ question });
   }
+
+  // static async createMedia(req, res, next) {
+  //   try {
+  //     console.log(req);
+  //     const media = req.file.path;
+  //     // const urlArr = media.split("/");
+  //     // const mediaUrl = urlArr.slice(1, urlArr.length).join("/");
+
+  //     // const url = await MediaService.createMedia(mediaUrl);
+
+  //     return res.json({
+  //       message: "Successfully upload picture",
+  //       // url,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     next(err);
+  //   }
+  // }
 
   // static async getUserToken(req, res) {
   //   const bearer = req.headers["authorization"];

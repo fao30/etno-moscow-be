@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       questions: DataTypes.STRING,
       questionType: DataTypes.STRING,
       correctAnswer: DataTypes.STRING,
+      mediaUrl: DataTypes.STRING,
       score: DataTypes.INTEGER,
       answersArray: {
         type: DataTypes.ARRAY(DataTypes.STRING),
