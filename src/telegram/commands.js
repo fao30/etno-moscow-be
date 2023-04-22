@@ -29,6 +29,22 @@ async function sendMessageListSurveys(chatId) {
   // Send a message with the inline keyboard to the specified chat
   bot.sendMessage(chatId, "Please select an option:", options);
 }
+async function sendMedia(chatId, media) {
+  const bot = require("../server");
+  if (media.split("/")[0] === "photos") {
+    bot.sendPhoto({
+      chat_id: chatId, // replace with the chat ID of the user or group
+      photo: "localhost:3000/" + media, // replace with the path to your photo
+      caption: "This is a caption for the photo.", // optional caption for the photo
+    });
+  } else {
+    bot.sendVideo({
+      chat_id: chatId, // replace with the chat ID of the user or group
+      video: "localhost:3000/" + media, // replace with the path to your video
+      caption: "This is a caption for the video.", // optional caption for the video
+    });
+  }
+}
 
 async function getQuestions(uuid) {
   const surveys = await Surveys.findOne({
@@ -54,6 +70,7 @@ async function getQuestions(uuid) {
       options: e.answersArray,
       score: e.score,
       hasAnswered: false,
+      mediaUrl: e.mediaUrl,
     };
   });
 
@@ -63,4 +80,5 @@ async function getQuestions(uuid) {
 module.exports = {
   sendMessageListSurveys,
   getQuestions,
+  sendMedia,
 };

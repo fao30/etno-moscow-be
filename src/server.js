@@ -13,7 +13,11 @@ const { sequelize } = require("./api/models");
 //telegram
 const { Questions, Users, Surveys, Regions } = require("./api/models");
 const Jimp = require("jimp");
-const { sendMessageListSurveys, getQuestions } = require("./telegram/commands");
+const {
+  sendMessageListSurveys,
+  getQuestions,
+  sendMedia,
+} = require("./telegram/commands");
 
 // setup swagger
 const swaggerUI = require("swagger-ui-express");
@@ -230,6 +234,11 @@ bot.on("message", async (msg) => {
     if (userList[chatId].questions[indexAnswer + 1]) {
       const questionSend = userList[chatId].questions[indexAnswer + 1].question;
       const answerSend = userList[chatId].questions[indexAnswer + 1].options;
+      const media = userList[chatId].questions[indexAnswer + 1].mediaUrl;
+
+      if (media) {
+        sendMedia(chatId, media);
+      }
 
       bot.sendMessage(chatId, questionSend, {
         reply_markup: {
@@ -269,8 +278,6 @@ bot.on("callback_query", async (query) => {
       //KALAU ADA YANG AGA ADA VALUENYA
       if (!objectFields[property] && property !== "regionId") {
         //STORING RESULT
-        console.log(fieldNames, "<<<<<====fieldNames");
-        console.log(property, "<<<<<====property");
         bot.sendMessage(chatId, `Введите ${property}`);
         return;
       }
@@ -321,6 +328,11 @@ bot.on("callback_query", async (query) => {
 
       const questionSend = userList[chatId].questions[0]?.question;
       const answerSend = userList[chatId].questions[0]?.options;
+      const media = userList[chatId].questions[0].mediaUrl;
+
+      if (media) {
+        sendMedia(chatId, media);
+      }
 
       bot.sendMessage(chatId, questionSend, {
         reply_markup: {
