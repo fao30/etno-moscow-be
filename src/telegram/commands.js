@@ -32,16 +32,15 @@ async function sendMessageListSurveys(chatId) {
 async function sendMedia(chatId, media) {
   const bot = require("../server");
   if (media.split("/")[0] === "photos") {
-    bot.sendPhoto({
-      chat_id: chatId, // replace with the chat ID of the user or group
-      photo: "localhost:3000/" + media, // replace with the path to your photo
-      caption: "This is a caption for the photo.", // optional caption for the photo
-    });
+    bot.sendPhoto(
+      chatId, // replace with the chat ID of the user or group
+      "https://dev.kima-edu.com/photos/1681431971534-picturecity%20bites.png"
+      // photo: "localhost:3000/" + media, // replace with the path to your photo
+    );
   } else {
     bot.sendVideo({
       chat_id: chatId, // replace with the chat ID of the user or group
       video: "localhost:3000/" + media, // replace with the path to your video
-      caption: "This is a caption for the video.", // optional caption for the video
     });
   }
 }

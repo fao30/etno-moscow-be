@@ -237,7 +237,7 @@ bot.on("message", async (msg) => {
       const media = userList[chatId].questions[indexAnswer + 1].mediaUrl;
 
       if (media) {
-        sendMedia(chatId, media);
+        await sendMedia(chatId, media);
       }
 
       bot.sendMessage(chatId, questionSend, {
@@ -331,7 +331,7 @@ bot.on("callback_query", async (query) => {
       const media = userList[chatId].questions[0].mediaUrl;
 
       if (media) {
-        sendMedia(chatId, media);
+        await sendMedia(chatId, media);
       }
 
       bot.sendMessage(chatId, questionSend, {
