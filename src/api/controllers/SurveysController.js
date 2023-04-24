@@ -13,13 +13,13 @@ const bcrypt = require("bcrypt");
 
 class SurveysController {
   static async getAllSurveys(req, res) {
-    const users = await SruveyService.findAllSurveys();
+    const surveys = await SruveyService.findAllSurveys();
 
-    if (!users.length) {
+    if (!surveys.length) {
       throw new AppError(NO_CONTENT, "surveys not found", 400);
     }
 
-    return res.status(OK).json({ users });
+    return res.status(OK).json({ surveys });
   }
 
   static async getSurveyById(req, res) {
@@ -35,7 +35,7 @@ class SurveysController {
   static async createSurvey(req, res) {
     const { title, descriptions, maxScore, isPrivate, isOpen, regionId } =
       req.body;
-    const user = await SruveyService.register(
+    const survey = await SruveyService.register(
       title,
       descriptions,
       maxScore,
@@ -44,11 +44,11 @@ class SurveysController {
       regionId
     );
 
-    if (!user) {
+    if (!survey) {
       throw new AppError(BAD_REQUEST, "Cannot create survey", 400);
     }
 
-    return res.status(CREATED).json({ user });
+    return res.status(CREATED).json({ survey });
   }
 
   static async deleteSurvey(req, res) {

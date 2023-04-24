@@ -2,21 +2,17 @@
 	"openapi": "3.0.0",
 	"info": {
 		"title": "Etno-moscow",
-		"description": "API for website Kima",
+		"description": "API for website etno",
 		"version": "1.0.0"
 	},
 	"servers": [
-		{
-			"url": "https://dev.kima-edu.com",
-			"description": "development"
-		},
 		{
 			"url": "http://localhost:3000",
 			"description": "local 1"
 		},
 		{
-			"url": "http://localhost:6969",
-			"description": "local 2"
+			"url": "https://dev.etno-edu.com",
+			"description": "development"
 		}
 	],
 	"components": {
@@ -29,43 +25,279 @@
 	},
 	"tags": [
 		{
+			"name": "Regions",
+			"description": "All regions route"
+		},
+		{
+			"name": "Questions",
+			"description": "All questions route"
+		},
+		{
+			"name": "Surveys",
+			"description": "All surveys route"
+		},
+		{
 			"name": "Register and Login",
 			"description": "User register and login routes"
-		},
-		{
-			"name": "Vacancies",
-			"description": "Third party API from hh.ru"
-		},
-		{
-			"name": "User Profile",
-			"description": "All authenticate routes"
-		},
-		{
-			"name": "MOP",
-			"description": "All MOP routes"
-		},
-		{
-			"name": "Reset Password",
-			"description": "All dashboard routes"
-		},
-		{
-			"name": "Public",
-			"description": "All dashboard routes"
-		},
-		{
-			"name": "Admin Dashboard",
-			"description": "All admin routes"
-		},
-		{
-			"name": "Partnership",
-			"description": "Partnership email sending"
-		},
-		{
-			"name": "hh.ru",
-			"description": "All hh.ru routes"
 		}
 	],
 	"paths": {
+		"/api/regions": {
+			"get": {
+				"tags": ["Regions"],
+				"summary": "Get all Regions",
+				"responses": {
+					"200": {
+						"description": "Get Regions success"
+					},
+					"400": {
+						"description": "Bad request"
+					}
+				}
+			}
+		},
+		"/api/regions/{id}": {
+			"get": {
+				"tags": ["Regions"],
+				"summary": "Get Region by UUID",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Questions's UUID"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get Region success"
+					},
+					"400": {
+						"description": "Bad request"
+					}
+				}
+			}
+		},
+		"/api/questions": {
+			"get": {
+				"tags": ["Questions"],
+				"summary": "Get all Questions",
+				"responses": {
+					"200": {
+						"description": "Get Questions success"
+					},
+					"400": {
+						"description": "Bad request"
+					}
+				}
+			}
+		},
+		"/api/questions/{id}": {
+			"put": {
+				"tags": ["Questions"],
+				"summary": "Update question",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Questions's UUID"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"picture": {
+										"type": "string",
+										"format": "binary"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"questions": {
+										"type": "string"
+									},
+									"questionType": {
+										"type": "string"
+									},
+									"correctAnswer": {
+										"type": "string"
+									},
+									"score": {
+										"type": "integer"
+									},
+									"instituteId": {
+										"type": "integer"
+									},
+									"answersArray": {
+										"type": "string"
+									},
+									"surveyId": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Success edit question"
+					},
+					"400": {
+						"description": "Can't edit question"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Questions"],
+				"summary": "Get Question by UUID",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Questions's UUID"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get Questions success"
+					},
+					"400": {
+						"description": "Bad request"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Questions"],
+				"summary": "Delete questions",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Questions's UUID"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Questions deleted"
+					},
+					"400": {
+						"description": "Bad request"
+					}
+				}
+			}
+		}, 
+		"/api/questions/{surveyId}": {
+			"post": {
+				"tags": ["Questions"],
+				"summary": "Make new question based on survey Id",
+				"parameters": [
+					{
+						"name": "surveyId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Surveys's id"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"picture": {
+										"type": "string",
+										"format": "binary"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"questions": {
+										"type": "string"
+									},
+									"questionType": {
+										"type": "string"
+									},
+									"correctAnswer": {
+										"type": "string"
+									},
+									"score": {
+										"type": "integer"
+									},
+									"instituteId": {
+										"type": "integer"
+									},
+									"answersArray": {
+										"type": "string"
+									},
+									"surveyId": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Success made question"
+					},
+					"400": {
+						"description": "Can't question"
+					}
+				}
+			}
+		}, 
 		"/api/register": {
 			"post": {
 				"tags": ["Register and Login"],
@@ -170,88 +402,13 @@
 				}
 			}
 		},
-		"/api/suggestions/vacancies": {
+		"/api/surveys": {
 			"get": {
-				"tags": ["hh.ru"],
-				"summary": "Get all vacancies from hh.ru",
-				"parameters": [
-					{
-						"name": "text",
-						"in": "query",
-						"required": true,
-						"schema": {
-							"type": "string"
-						},
-						"description": "Vacancy"
-					}
-				],
+				"tags": ["Surveys"],
+				"summary": "Get all Surveys",
 				"responses": {
 					"200": {
-						"description": "Get vacancies success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/suggestions/skills": {
-			"get": {
-				"tags": ["hh.ru"],
-				"summary": "Get all skills from hh.ru",
-				"parameters": [
-					{
-						"name": "text",
-						"in": "query",
-						"required": true,
-						"schema": {
-							"type": "string"
-						},
-						"description": "Skill"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get skills success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/suggestions/specializations": {
-			"get": {
-				"tags": ["hh.ru"],
-				"summary": "Get all specializations from hh.ru",
-				"parameters": [
-					{
-						"name": "text",
-						"in": "query",
-						"required": true,
-						"schema": {
-							"type": "string"
-						},
-						"description": "Specialization"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get specializations success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/universities": {
-			"get": {
-				"tags": ["Register and Login"],
-				"summary": "Get all universities",
-				"responses": {
-					"200": {
-						"description": "Get universities success"
+						"description": "Get Surveys success"
 					},
 					"400": {
 						"description": "Bad request"
@@ -259,943 +416,33 @@
 				}
 			},
 			"post": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Create university",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
+				"tags": ["Surveys"],
+				"summary": "Make new Survey",
 				"requestBody": {
 					"content": {
 						"application/json": {
 							"schema": {
 								"type": "object",
 								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create university"
-					},
-					"400": {
-						"description": "Can't create university"
-					}
-				}
-			}
-		},
-		"/api/universities/{id}": {
-			"put": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Update university",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "University's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create university"
-					},
-					"400": {
-						"description": "Can't create university"
-					}
-				}
-			},
-			"delete": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Delete university",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "University's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Universities deleted"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/institutes": {
-			"get": {
-				"tags": ["Register and Login"],
-				"summary": "Get all institutes",
-				"responses": {
-					"200": {
-						"description": "Get institutes success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			},
-			"post": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Create institute",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create institute"
-					},
-					"400": {
-						"description": "Can't create institute"
-					}
-				}
-			}
-		},
-		"/api/institutes/{id}": {
-			"put": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Update institute",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Institute's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create institute"
-					},
-					"400": {
-						"description": "Can't create institute"
-					}
-				}
-			},
-			"delete": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Delete institute",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Institute's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Institute deleted"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/majors": {
-			"get": {
-				"tags": ["Register and Login"],
-				"summary": "Get all majors",
-				"responses": {
-					"200": {
-						"description": "Get majors success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			},
-			"post": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Create major",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create major"
-					},
-					"400": {
-						"description": "Can't create major"
-					}
-				}
-			}
-		},
-		"/api/majors/{id}": {
-			"put": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Update institute",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Major's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success update major"
-					},
-					"400": {
-						"description": "Can't update major"
-					}
-				}
-			},
-			"delete": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Delete major",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Major's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Major deleted"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/specialties": {
-			"get": {
-				"tags": ["Register and Login"],
-				"summary": "Get all specializations",
-				"responses": {
-					"200": {
-						"description": "Get specializations success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			},
-			"post": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Create specialty",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create specialty"
-					},
-					"400": {
-						"description": "Can't create specialty"
-					}
-				}
-			}
-		},
-		"/api/specialties/{id}": {
-			"put": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Update specialty",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Specialty's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success update specialty"
-					},
-					"400": {
-						"description": "Can't update specialty"
-					}
-				}
-			},
-			"delete": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Delete specialty",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Specialty's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Specialty deleted"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/educations": {
-			"get": {
-				"tags": ["Register and Login"],
-				"summary": "Get all educations",
-				"responses": {
-					"200": {
-						"description": "Get educations success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			},
-			"post": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Create education",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create education"
-					},
-					"400": {
-						"description": "Can't create education"
-					}
-				}
-			}
-		},
-		"/api/educations/{id}": {
-			"put": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Update education",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Education's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success update education"
-					},
-					"400": {
-						"description": "Can't update education"
-					}
-				}
-			},
-			"delete": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Delete education",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Education's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Education deleted"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/departments": {
-			"get": {
-				"tags": ["Register and Login"],
-				"summary": "Get all departments",
-				"responses": {
-					"200": {
-						"description": "Get departments success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			},
-			"post": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Create department",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create department"
-					},
-					"400": {
-						"description": "Can't create department"
-					}
-				}
-			}
-		},
-		"/api/departments/{id}": {
-			"put": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Update department",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Department's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success update department"
-					},
-					"400": {
-						"description": "Can't update department"
-					}
-				}
-			},
-			"delete": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Delete department",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Department's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Department deleted"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/vacancies": {
-			"get": {
-				"tags": ["Vacancies", "MOP"],
-				"summary": "Get all vacancies",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "text",
-						"in": "query",
-						"schema": {
-							"type": "string"
-						},
-						"description": "Text vacancy"
-					},
-					{
-						"name": "page",
-						"in": "isHide",
-						"schema": {
-							"type": "boolean"
-						},
-						"description": "isHide"
-					},
-					{
-						"name": "page",
-						"in": "area",
-						"schema": {
-							"type": "string"
-						},
-						"description": "Area vacancy"
-					},
-					{
-						"name": "page",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Vacancy page"
-					},
-					{
-						"name": "limit",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Vacancy limit per page"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get vacancies success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/vacancies/{id}": {
-			"get": {
-				"tags": ["Vacancies"],
-				"summary": "Get vacancy by id",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Vacancy id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get vacancy success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/vacancies/{id}/{idOp}": {
-			"get": {
-				"tags": ["MOP"],
-				"summary": "Get Op by id",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Vacancy id"
-					},
-					{
-						"name": "idOp",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "OP id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get vacancy success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/users/get-me": {
-			"get": {
-				"tags": ["User Profile"],
-				"summary": "Get user by token",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get user success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			},
-			"put": {
-				"tags": ["User Profile"],
-				"summary": " User profile update",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"lastName": {
+									"title": {
 										"type": "string"
 									},
-									"firstName": {
+									"descriptions": {
 										"type": "string"
 									},
-									"middleName": {
+									"correctAnswer": {
 										"type": "string"
 									},
-									"dateOfBirth": {
-										"type": "string"
-									},
-									"universityId": {
+									"maxScore": {
 										"type": "integer"
 									},
-									"instituteId": {
-										"type": "integer"
-									},
-									"majorId": {
-										"type": "integer"
-									},
-									"specialtyId": {
-										"type": "integer"
-									},
-									"educationId": {
-										"type": "integer"
-									},
-									"departmentId": {
-										"type": "integer"
-									},
-									"studyYear": {
-										"type": "integer"
-									},
-									"position": {
-										"type": "string"
-									},
-									"phone": {
-										"type": "string"
-									},
-									"email": {
-										"type": "string"
-									},
-									"photoId": {
-										"type": "integer"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "User updated"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"404": {
-						"description": "User not found"
-					}
-				}
-			}
-		},
-		"/api/documents/picture": {
-			"post": {
-				"tags": ["User Profile"],
-				"summary": "Upload picture",
-				"requestBody": {
-					"content": {
-						"multipart/form-data": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"picture": {
-										"type": "string",
-										"format": "binary"
-									},
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success upload picture"
-					},
-					"400": {
-						"description": "Can't upload picture"
-					}
-				}
-			}
-		},
-		"/api/skills": {
-			"post": {
-				"tags": ["User Profile"],
-				"summary": "Create user skills",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									},
-									"isHardSkill": {
+									"isPrivate": {
 										"type": "boolean"
 									},
-									"link": {
+									"isOpen": {
+										"type": "boolean"
+									},
+									"regionId": {
 										"type": "string"
 									}
 								}
@@ -1205,32 +452,32 @@
 				},
 				"responses": {
 					"201": {
-						"description": "Success create skill"
+						"description": "Success made question"
 					},
 					"400": {
-						"description": "Can't upload skill"
+						"description": "Can't question"
 					}
 				}
 			}
 		},
-		"/api/skills/{id}": {
+		"/api/surveys/{id}": {
 			"put": {
-				"tags": ["User Profile", "Admin Dashboard"],
-				"summary": "Update user skills",
+				"tags": ["Surveys"],
+				"summary": "Update survey",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [
 					{
 						"name": "id",
 						"in": "path",
 						"required": true,
 						"schema": {
-							"type": "integer"
+							"type": "string"
 						},
-						"description": "Skill id"
-					}
-				],
-				"security": [
-					{
-						"bearer": []
+						"description": "Surveys's UUID"
 					}
 				],
 				"requestBody": {
@@ -1239,13 +486,25 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"name": {
+									"title": {
 										"type": "string"
 									},
-									"isHardSkill": {
+									"descriptions": {
+										"type": "string"
+									},
+									"correctAnswer": {
+										"type": "string"
+									},
+									"maxScore": {
+										"type": "integer"
+									},
+									"isPrivate": {
 										"type": "boolean"
 									},
-									"link": {
+									"isOpen": {
+										"type": "boolean"
+									},
+									"regionId": {
 										"type": "string"
 									}
 								}
@@ -1254,718 +513,62 @@
 					}
 				},
 				"responses": {
-					"200": {
-						"description": "Success updated skill"
+					"201": {
+						"description": "Success edit survey"
 					},
 					"400": {
-						"description": "Can't update skill"
+						"description": "Can't edit survey"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Surveys"],
+				"summary": "Get survey by UUID",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Survey's UUID"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get Survey success"
 					},
-					"404": {
-						"description": "Skill not found"
+					"400": {
+						"description": "Bad request"
 					}
 				}
 			},
 			"delete": {
-				"tags": ["User Profile", "Admin Dashboard"],
-				"summary": "Delete user skills",
+				"tags": ["Surveys"],
+				"summary": "Delete survey",
 				"parameters": [
 					{
 						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Skill id"
-					}
-				],
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Skill deleted"
-					},
-					"400": {
-						"description": "Can't delete skill"
-					},
-					"404": {
-						"description": "Skill not found"
-					}
-				}
-			}
-		},
-		"/api/partnership": {
-			"post": {
-				"tags": ["Partnership"],
-				"summary": "Sent email for partnership",
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"fullName": {
-										"type": "string"
-									},
-									"institution": {
-										"type": "string"
-									},
-									"position": {
-										"type": "string"
-									},
-									"subject": {
-										"type": "string"
-									},
-									"email": {
-										"type": "string"
-									},
-									"phone": {
-										"type": "string"
-									},
-									"message": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success sent email"
-					},
-					"400": {
-						"description": "Can't sent email"
-					}
-				}
-			}
-		},
-		"/api/admin/op": {
-			"get": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Get users by query",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "instituteId",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Institute's id"
-					},
-					{
-						"name": "universityId",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "University's id"
-					},
-					{
-						"name": "limit",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Users per page limit"
-					},
-					{
-						"name": "page",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Pages"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get all OP success"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"404": {
-						"description": "OP not found"
-					}
-				}
-			}
-		},
-		"/api/admin/users": {
-			"get": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Get users by query",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "fullName",
-						"in": "query",
-						"schema": {
-							"type": "string"
-						},
-						"description": "User's full name"
-					},
-					{
-						"name": "university",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "User's university id"
-					},
-					{
-						"name": "limit",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Users per page limit"
-					},
-					{
-						"name": "page",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Pages"
-					},
-					{
-						"name": "status",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "User's status id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get all users success"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"404": {
-						"description": "Users not found"
-					}
-				}
-			}
-		},
-		"/api/admin/users/{id}": {
-			"get": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Get user by id",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "User's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get user success"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"404": {
-						"description": "User not found"
-					}
-				}
-			},
-			"put": {
-				"tags": ["Admin Dashboard"],
-				"summary": " User profile update",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "User's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"lastName": {
-										"type": "string"
-									},
-									"firstName": {
-										"type": "string"
-									},
-									"middleName": {
-										"type": "string"
-									},
-									"dateOfBirth": {
-										"type": "string"
-									},
-									"universityId": {
-										"type": "integer"
-									},
-									"instituteId": {
-										"type": "integer"
-									},
-									"majorId": {
-										"type": "integer"
-									},
-									"specialtyId": {
-										"type": "integer"
-									},
-									"educationId": {
-										"type": "integer"
-									},
-									"departmentId": {
-										"type": "integer"
-									},
-									"studyYear": {
-										"type": "integer"
-									},
-									"position": {
-										"type": "string"
-									},
-									"phone": {
-										"type": "string"
-									},
-									"email": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "User updated"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"404": {
-						"description": "User not found"
-					}
-				}
-			}
-		},
-		"/api/roles": {
-			"get": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Get status",
-				"responses": {
-					"200": {
-						"description": "Get all status success"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"404": {
-						"description": "Status not found"
-					}
-				}
-			}
-		},
-		"/api/admin/skills/{id}": {
-			"post": {
-				"tags": ["Admin Dashboard"],
-				"summary": "Create user skills",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "User's id"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									},
-									"isHardSkill": {
-										"type": "boolean"
-									},
-									"link": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create skill"
-					},
-					"400": {
-						"description": "Can't upload skill"
-					}
-				}
-			}
-		},
-		"/api/mop/program": {
-			"post": {
-				"tags": ["MOP"],
-				"summary": "Create program",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"multipart/form-data": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"file": {
-										"type": "string",
-										"format": "binary"
-									},
-									"name": {
-										"type": "string"
-									},
-									"instituteId": {
-										"type": "integer"
-									},
-									"universityId": {
-										"type": "integer"
-									},
-									"majorId": {
-										"type": "integer"
-									},
-									"educationId": {
-										"type": "integer"
-									},
-									"vacancyType": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"name": {
-													"type": "string"
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Success create program"
-					},
-					"400": {
-						"description": "Bad request"
-					},
-					"401": {
-						"description": "Unauthorized"
-					}
-				}
-			}
-		},
-		"/api/mop/get-me": {
-			"get": {
-				"tags": ["MOP"],
-				"summary": "Get MOP data by token",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get mop success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/studies": {
-			"get": {
-				"tags": ["Register and Login"],
-				"summary": "Get all studies",
-				"parameters": [
-					{
-						"name": "universityId",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "University's id"
-					},
-					{
-						"name": "majorId",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Major's id"
-					},
-					{
-						"name": "instituteId",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Institute's id"
-					},
-					{
-						"name": "educationId",
-						"in": "query",
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Education's id"
-					},
-					{
-						"name": "showAll",
-						"in": "query",
-						"schema": {
-							"type": "boolean"
-						},
-						"description": "true for showing unconfirmed study"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get studies success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/studies/{id}": {
-			"get": {
-				"tags": ["Public"],
-				"summary": "Get study by id",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Study's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get study success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/public-specialization/{majorId}": {
-			"get": {
-				"tags": ["Public"],
-				"summary": "Get all specializations by major",
-				"parameters": [
-					{
-						"name": "majorId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Major's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get specializations success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/public-vacancies/{specializationId}": {
-			"get": {
-				"tags": ["Public"],
-				"summary": "Get specialization comparison to vacancies",
-				"parameters": [
-					{
-						"name": "specializationId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer"
-						},
-						"description": "Specialization's id"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get comparison success"
-					},
-					"400": {
-						"description": "Bad request"
-					}
-				}
-			}
-		},
-		"/api/users/change-password": {
-			"put": {
-				"tags": ["User Profile"],
-				"summary": "User change password route",
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"oldPassword": {
-										"type": "string"
-									},
-									"newPassword": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "User password changed"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"404": {
-						"description": "User not found"
-					}
-				}
-			}
-		},
-		"/api/password": {
-			"post": {
-				"summary": "Reset password for user",
-				"tags": ["Reset Password"],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"email": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Email send"
-					},
-					"400": {
-						"description": "Bad request"
-					},
-					"404": {
-						"description": "Email not registered"
-					}
-				}
-			}
-		},
-		"/api/password/{token}": {
-			"put": {
-				"tags": ["Reset Password"],
-				"summary": "Verify token and reset password",
-				"parameters": [
-					{
-						"name": "token",
 						"in": "path",
 						"required": true,
 						"schema": {
 							"type": "string"
 						},
-						"description": "Token"
+						"description": "Surveys's UUID"
 					}
 				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"password": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
 				"responses": {
 					"200": {
-						"description": "Password reset"
+						"description": "Survey deleted"
 					},
 					"400": {
 						"description": "Bad request"
-					},
-					"404": {
-						"description": "Email not registered"
 					}
 				}
 			}

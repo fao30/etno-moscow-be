@@ -13,7 +13,7 @@ router.get("/:id", tryCatch(SurveysController.getSurveyById));
 router.post("/", tryCatch(SurveysController.createSurvey));
 
 //delete survey
-router.post("/:id", tryCatch(SurveysController.deleteSurvey));
+router.delete("/:id", tryCatch(SurveysController.deleteSurvey));
 
 //editing survey
 router.put("/:id", tryCatch(SurveysController.updateSurvey));

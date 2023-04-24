@@ -363,6 +363,9 @@ app.use("/api/questions", require("./api/routes/questionsRoutes"));
 //SURVEYS ROUTE
 app.use("/api/surveys", require("./api/routes/surveysRoutes"));
 
+//SURVEYS ROUTE
+app.use("/api/regions", require("./api/routes/regionsRoutes"));
+
 app.listen(PORT, async () => {
   console.log(`Server listening on port ${PORT}`);
   await sequelize.authenticate();
