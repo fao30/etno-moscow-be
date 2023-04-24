@@ -6,16 +6,21 @@ const { tryCatch } = require("../utils/tryCatch");
 //get all user
 router.get("/", tryCatch(QuestionsController.getAllQuestions));
 
-//user by id
+//question by id
 router.get("/:id", tryCatch(QuestionsController.getQuestionById));
 
-//create question by id questions
-
+//create question by id Survey
 router.post(
   "/:surveyId",
   uploadMedia.single("media"),
   tryCatch(QuestionsController.createQuestion)
 );
+
+//deleting question by id
+router.delete("/:id", tryCatch(QuestionsController.deleteQuestion));
+
+//editing question
+router.put("/:id", tryCatch(QuestionsController.updateQuestion));
 
 router.use(errorMiddleware);
 

@@ -87,50 +87,50 @@ class RegisterService {
   static async findUsersByRoleId(roleId) {
     return Users.findAll({
       where: { roleId },
-      include: [
-        {
-          model: Roles,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Departments,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Institutes,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Universities,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Educations,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Documents,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Specialties,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-      ],
+      // include: [
+      //   {
+      //     model: Roles,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Departments,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Institutes,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Universities,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Educations,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Documents,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Specialties,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      // ],
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
@@ -297,71 +297,71 @@ class RegisterService {
       offset: limit * page,
       order: [["createdAt", "DESC"]],
       include: [
-        {
-          model: Roles,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Institutes,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Departments,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Majors,
-          through: {
-            attributes: [],
-          },
-        },
-        {
-          model: Majors,
-          as: "UserMajor",
-        },
-        {
-          model: Universities,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Educations,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Documents,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Specialties,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Studies,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Studies,
-          as: "OpList",
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
+        // {
+        //   model: Roles,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Institutes,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Departments,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Majors,
+        //   through: {
+        //     attributes: [],
+        //   },
+        // },
+        // {
+        //   model: Majors,
+        //   as: "UserMajor",
+        // },
+        // {
+        //   model: Universities,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Educations,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Documents,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Specialties,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Studies,
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
+        // {
+        //   model: Studies,
+        //   as: "OpList",
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
       ],
       attributes: {
         exclude: ["updatedAt", "password"],

@@ -54,6 +54,13 @@ class QuestionService {
       mediaUrl,
     });
   }
+  static async delete(id) {
+    return Questions.destroy({
+      where: {
+        id,
+      },
+    });
+  }
 }
 
 module.exports = QuestionService;

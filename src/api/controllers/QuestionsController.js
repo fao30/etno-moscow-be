@@ -13,23 +13,23 @@ const bcrypt = require("bcrypt");
 
 class QuestionsController {
   static async getAllQuestions(req, res) {
-    const users = await QuestionService.findAllQuestions();
+    const questions = await QuestionService.findAllQuestions();
 
-    if (!users.length) {
+    if (!questions.length) {
       throw new AppError(NO_CONTENT, "questions not found", 400);
     }
 
-    return res.status(OK).json({ users });
+    return res.status(OK).json({ questions });
   }
 
   static async getQuestionById(req, res) {
-    const user = await QuestionService.findQuestionById(req.params.id);
+    const question = await QuestionService.findQuestionById(req.params.id);
 
-    if (!user) {
+    if (!question) {
       throw new AppError(NOT_FOUND, "question not found", 400);
     }
 
-    return res.json({ user });
+    return res.json({ question });
   }
   static async createQuestion(req, res) {
     let mediaUrl;
@@ -59,151 +59,47 @@ class QuestionsController {
 
     return res.status(CREATED).json({ question });
   }
+  static async deleteQuestion(req, res) {
+    const { id } = req.params;
 
-  // static async createMedia(req, res, next) {
-  //   try {
-  //     console.log(req);
-  //     const media = req.file.path;
-  //     // const urlArr = media.split("/");
-  //     // const mediaUrl = urlArr.slice(1, urlArr.length).join("/");
+    const deleted = await QuestionService.delete(id);
 
-  //     // const url = await MediaService.createMedia(mediaUrl);
+    if (!deleted) {
+      throw new AppError(BAD_REQUEST, "Cannot delete question", 400);
+    }
 
-  //     return res.json({
-  //       message: "Successfully upload picture",
-  //       // url,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //     next(err);
-  //   }
-  // }
+    return res.json({ message: "question deleted" });
+  }
 
-  // static async getUserToken(req, res) {
-  //   const bearer = req.headers["authorization"];
-  //   const token = bearer?.split(" ")[1];
-  //   if (!token) {
-  //     throw new AppError(403, "Unauthorized", 400);
-  //   }
+  static async updateQuestion(req, res) {
+    const {
+      questions,
+      mediaUrl,
+      questionType,
+      correctAnswer,
+      answersArray,
+      score,
+      surveyId,
+    } = req.body;
 
-  //   const body = ExtractToken(token);
-  //   if (!body) {
-  //     throw new AppError(204, "Token is empty", 400);
-  //   }
+    const oldData = await QuestionService.findQuestionById(req.params.id);
 
-  //   const user = await UserServices.findUserById(body.user.id);
+    if (!oldData) {
+      throw new AppError(NOT_FOUND, "Question not found to update", 400);
+    }
 
-  //   if (!user) {
-  //     throw new AppError(NOT_FOUND, "user not found", 400);
-  //   }
+    oldData.questions = questions;
+    oldData.mediaUrl = mediaUrl;
+    oldData.questionType = questionType;
+    oldData.correctAnswer = correctAnswer;
+    oldData.answersArray = answersArray;
+    oldData.score = score;
+    oldData.surveyId = surveyId;
 
-  //   return res.json({ user });
-  // }
+    await oldData.save();
 
-  // static async updateUser(req, res) {
-  //   const bearer = req.headers["authorization"];
-  //   const token = bearer?.split(" ")[1];
-  //   if (!token) {
-  //     throw new AppError(403, "Unauthorized", 400);
-  //   }
-
-  //   const body = ExtractToken(token);
-  //   if (!body) {
-  //     throw new AppError(204, "Token is empty", 400);
-  //   }
-  //   const {
-  //     firstName,
-  //     middleName,
-  //     lastName,
-  //     email,
-  //     position,
-  //     phone,
-  //     dateOfBirth,
-  //     studyYear,
-  //     departmentId,
-  //     instituteId,
-  //     majorId,
-  //     universityId,
-  //     educationId,
-  //     specialtyId,
-  //     photoId,
-  //   } = req.body;
-  //   const oldUser = await UserServices.findUserById(body.user.id);
-
-  //   if (!oldUser) {
-  //     throw new AppError(NOT_FOUND, "Department not found to update", 400);
-  //   }
-
-  //   if (majorId) {
-  //     const majors = await oldUser.getMajors();
-  //     //   const newMajor = await MajorService.findMajorById(majorId);
-  //     majors.push(newMajor);
-  //     majors.shift();
-  //     await oldUser.setMajors(majors);
-  //   }
-
-  //   oldUser.firstName = firstName;
-  //   oldUser.middleName = middleName;
-  //   oldUser.lastName = lastName;
-  //   oldUser.email = email;
-  //   oldUser.position = position;
-  //   oldUser.phone = phone;
-  //   oldUser.dateOfBirth = dateOfBirth;
-  //   oldUser.studyYear = studyYear;
-  //   oldUser.majorId = majorId;
-  //   oldUser.departmentId = departmentId;
-  //   oldUser.instituteId = instituteId;
-  //   oldUser.universityId = universityId;
-  //   oldUser.educationId = educationId;
-  //   oldUser.specialtyId = specialtyId;
-  //   oldUser.photoId = photoId;
-
-  //   await oldUser.save();
-
-  //   return res.json({ message: "Updated" });
-  // }
-
-  // static async deleteUser(req, res) {
-  //   const { id } = req.params;
-
-  //   const deleted = await UserServices.deleteUser(id);
-
-  //   if (!deleted) {
-  //     throw new AppError(BAD_REQUEST, "Cannot delete user", 400);
-  //   }
-
-  //   return res.json({ message: "user deleted" });
-  // }
-
-  // static async changePassword(req, res) {
-  //   const bearer = req.headers["authorization"];
-  //   const token = bearer?.split(" ")[1];
-  //   if (!token) {
-  //     throw new AppError(403, "Unauthorized", 400);
-  //   }
-
-  //   const body = ExtractToken(token);
-  //   if (!body) {
-  //     throw new AppError(204, "Token is empty", 400);
-  //   }
-
-  //   const user = await UserServices.findUserById(body.user.id);
-  //   if (!user) {
-  //     throw new AppError(404, "User not found", 404);
-  //   }
-
-  //   const { oldPassword, newPassword } = req.body;
-
-  //   const hashPassword = await bcrypt.hash(newPassword, 10);
-
-  //   await UserServices.updatePassword({
-  //     id: user.id,
-  //     oldPassword,
-  //     newPassword: hashPassword,
-  //   });
-
-  //   return res.json({ message: "Password changed" });
-  // }
+    return res.json({ message: "Updated" });
+  }
 }
 
 module.exports = QuestionsController;

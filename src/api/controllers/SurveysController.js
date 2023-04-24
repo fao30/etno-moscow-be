@@ -23,13 +23,13 @@ class SurveysController {
   }
 
   static async getSurveyById(req, res) {
-    const user = await SruveyService.findSruveyById(req.params.id);
+    const survey = await SruveyService.findSruveyById(req.params.id);
 
-    if (!user) {
+    if (!survey) {
       throw new AppError(NOT_FOUND, "survey not found", 400);
     }
 
-    return res.json({ user });
+    return res.json({ survey });
   }
 
   static async createSurvey(req, res) {
@@ -62,119 +62,28 @@ class SurveysController {
 
     return res.json({ message: "survey deleted" });
   }
-  // static async getUserToken(req, res) {
-  //   const bearer = req.headers["authorization"];
-  //   const token = bearer?.split(" ")[1];
-  //   if (!token) {
-  //     throw new AppError(403, "Unauthorized", 400);
-  //   }
 
-  //   const body = ExtractToken(token);
-  //   if (!body) {
-  //     throw new AppError(204, "Token is empty", 400);
-  //   }
+  static async updateSurvey(req, res) {
+    const { title, descriptions, maxScore, isPrivate, isOpen, regionId } =
+      req.body;
 
-  //   const user = await UserServices.findUserById(body.user.id);
+    const oldData = await SruveyService.findSruveyById(req.params.id);
 
-  //   if (!user) {
-  //     throw new AppError(NOT_FOUND, "user not found", 400);
-  //   }
+    if (!oldData) {
+      throw new AppError(NOT_FOUND, "Survey not found to update", 400);
+    }
 
-  //   return res.json({ user });
-  // }
+    oldData.title = title;
+    oldData.descriptions = descriptions;
+    oldData.maxScore = maxScore;
+    oldData.isPrivate = isPrivate;
+    oldData.isOpen = isOpen;
+    oldData.regionId = regionId;
 
-  // static async updateUser(req, res) {
-  //   const bearer = req.headers["authorization"];
-  //   const token = bearer?.split(" ")[1];
-  //   if (!token) {
-  //     throw new AppError(403, "Unauthorized", 400);
-  //   }
+    await oldData.save();
 
-  //   const body = ExtractToken(token);
-  //   if (!body) {
-  //     throw new AppError(204, "Token is empty", 400);
-  //   }
-  //   const {
-  //     firstName,
-  //     middleName,
-  //     lastName,
-  //     email,
-  //     position,
-  //     phone,
-  //     dateOfBirth,
-  //     studyYear,
-  //     departmentId,
-  //     instituteId,
-  //     majorId,
-  //     universityId,
-  //     educationId,
-  //     specialtyId,
-  //     photoId,
-  //   } = req.body;
-  //   const oldUser = await UserServices.findUserById(body.user.id);
-
-  //   if (!oldUser) {
-  //     throw new AppError(NOT_FOUND, "Department not found to update", 400);
-  //   }
-
-  //   if (majorId) {
-  //     const majors = await oldUser.getMajors();
-  //     //   const newMajor = await MajorService.findMajorById(majorId);
-  //     majors.push(newMajor);
-  //     majors.shift();
-  //     await oldUser.setMajors(majors);
-  //   }
-
-  //   oldUser.firstName = firstName;
-  //   oldUser.middleName = middleName;
-  //   oldUser.lastName = lastName;
-  //   oldUser.email = email;
-  //   oldUser.position = position;
-  //   oldUser.phone = phone;
-  //   oldUser.dateOfBirth = dateOfBirth;
-  //   oldUser.studyYear = studyYear;
-  //   oldUser.majorId = majorId;
-  //   oldUser.departmentId = departmentId;
-  //   oldUser.instituteId = instituteId;
-  //   oldUser.universityId = universityId;
-  //   oldUser.educationId = educationId;
-  //   oldUser.specialtyId = specialtyId;
-  //   oldUser.photoId = photoId;
-
-  //   await oldUser.save();
-
-  //   return res.json({ message: "Updated" });
-  // }
-
-  // static async changePassword(req, res) {
-  //   const bearer = req.headers["authorization"];
-  //   const token = bearer?.split(" ")[1];
-  //   if (!token) {
-  //     throw new AppError(403, "Unauthorized", 400);
-  //   }
-
-  //   const body = ExtractToken(token);
-  //   if (!body) {
-  //     throw new AppError(204, "Token is empty", 400);
-  //   }
-
-  //   const user = await UserServices.findUserById(body.user.id);
-  //   if (!user) {
-  //     throw new AppError(404, "User not found", 404);
-  //   }
-
-  //   const { oldPassword, newPassword } = req.body;
-
-  //   const hashPassword = await bcrypt.hash(newPassword, 10);
-
-  //   await UserServices.updatePassword({
-  //     id: user.id,
-  //     oldPassword,
-  //     newPassword: hashPassword,
-  //   });
-
-  //   return res.json({ message: "Password changed" });
-  // }
+    return res.json({ message: "Updated" });
+  }
 }
 
 module.exports = SurveysController;
