@@ -3,11 +3,23 @@ const QuestionsController = require("../controllers/QuestionsController");
 const errorMiddleware = require("../middlewares/errorMiddleware");
 const { uploadPicture, uploadVideo, uploadMedia } = require("../utils/storage");
 const { tryCatch } = require("../utils/tryCatch");
+const passport = require("passport");
+const admin = require("../middlewares/adminAuthenticate");
 //get all user
-router.get("/", tryCatch(QuestionsController.getAllQuestions));
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  tryCatch(admin),
+  tryCatch(QuestionsController.getAllQuestions)
+);
 
 //question by id
-router.get("/:id", tryCatch(QuestionsController.getQuestionById));
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  tryCatch(admin),
+  tryCatch(QuestionsController.getQuestionById)
+);
 
 //create question by id Survey
 router.post(

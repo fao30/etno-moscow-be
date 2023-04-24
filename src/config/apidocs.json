@@ -46,6 +46,11 @@
 			"get": {
 				"tags": ["Regions"],
 				"summary": "Get all Regions",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "Get Regions success"
@@ -90,6 +95,11 @@
 			"get": {
 				"tags": ["Questions"],
 				"summary": "Get all Questions",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "Get Questions success"
@@ -206,6 +216,11 @@
 			"delete": {
 				"tags": ["Questions"],
 				"summary": "Delete questions",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [
 					{
 						"name": "id",
@@ -231,6 +246,11 @@
 			"post": {
 				"tags": ["Questions"],
 				"summary": "Make new question based on survey Id",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [
 					{
 						"name": "surveyId",
@@ -406,6 +426,11 @@
 			"get": {
 				"tags": ["Surveys"],
 				"summary": "Get all Surveys",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "Get Surveys success"
@@ -552,6 +577,11 @@
 			"delete": {
 				"tags": ["Surveys"],
 				"summary": "Delete survey",
+				"security": [
+					{
+						"bearer": []
+					}
+				],
 				"parameters": [
 					{
 						"name": "id",

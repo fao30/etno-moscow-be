@@ -8,8 +8,6 @@ const errorMiddleware = require("../../middlewares/errorMiddleware");
 
 router.post("/login", async (req, res, next) => {
   passport.authenticate("login", async (err, user, info) => {
-    console.log(info);
-
     if (err || !user) {
       throw new AppError(NO_CONTENT, "User is undefined");
     }
@@ -20,7 +18,6 @@ router.post("/login", async (req, res, next) => {
       const payload = {
         id: user.id,
         email: user.email,
-        roleId: user.roleId,
       };
 
       const token = jwt.sign(

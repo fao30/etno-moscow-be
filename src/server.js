@@ -354,6 +354,9 @@ bot.on("error", (err) => {
  * ROUTE START FROM HERE
  */
 
+//LOGIN ROUTE
+app.use("/api", require("./api/routes/registerLogin/loginRoutes"));
+
 //USER ROUTE
 app.use("/api/users", require("./api/routes/usersRoutes"));
 

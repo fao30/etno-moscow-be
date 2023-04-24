@@ -166,70 +166,70 @@ class RegisterService {
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
-      include: [
-        {
-          model: Roles,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Departments,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Institutes,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Universities,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Educations,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Locations,
-          include: [
-            {
-              model: Cities,
-              attributes: {
-                exclude: ["createdAt", "updatedAt"],
-              },
-            },
-            {
-              model: Regions,
-              attributes: {
-                exclude: ["createdAt", "updatedAt"],
-              },
-            },
-          ],
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Documents,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: Specialties,
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-      ],
+      // include: [
+      //   {
+      //     model: Roles,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Departments,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Institutes,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Universities,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Educations,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Locations,
+      //     include: [
+      //       {
+      //         model: Cities,
+      //         attributes: {
+      //           exclude: ["createdAt", "updatedAt"],
+      //         },
+      //       },
+      //       {
+      //         model: Regions,
+      //         attributes: {
+      //           exclude: ["createdAt", "updatedAt"],
+      //         },
+      //       },
+      //     ],
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Documents,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      //   {
+      //     model: Specialties,
+      //     attributes: {
+      //       exclude: ["createdAt", "updatedAt"],
+      //     },
+      //   },
+      // ],
     });
   }
 

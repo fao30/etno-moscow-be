@@ -80,6 +80,9 @@ class PassportController {
 
   static async loginUser(email, password, done) {
     try {
+      console.log(
+        "ASKDASDNJKASDNJIANSDIJANSDJINASDJINASDUINSADIUNIADSNAISNDUISDNUIADSNUAISDNIUSDNUIN"
+      );
       const user = await UserService.findUserByEmail(email);
 
       if (user === null) {
@@ -94,13 +97,13 @@ class PassportController {
 
       return done(null, user, { message: "Login successful" });
     } catch (err) {
-      console.log(err);
       done(err);
     }
   }
 
   static async tokenUser(token, done) {
     try {
+      console.log(token, "<<<====token");
       return done(null, token.user);
     } catch (err) {
       console.log(err);
